@@ -1,6 +1,6 @@
 /**
  * Angular Carousel - Mobile friendly touch carousel for AngularJS
- * @version v0.3.13 - 2015-06-15
+ * @version v0.3.14 - 2015-09-11
  * @link http://revolunet.github.com/angular-carousel
  * @author Julien Bouquillon <julien@revolunet.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -593,16 +593,17 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
                                 var moveOffset = shouldMove ? slidesMove : 0;
 
                                 destination = (scope.carouselIndex + moveOffset);
-
-                                goToSlide(destination);
-                                if(iAttributes.rnCarouselOnInfiniteScrollRight!==undefined && slidesMove === 0 && scope.carouselIndex !== 0) {
-                                    $parse(iAttributes.rnCarouselOnInfiniteScrollRight)(scope)
-                                    goToSlide(0);
-                                }
-                                if(iAttributes.rnCarouselOnInfiniteScrollLeft!==undefined && slidesMove === 0 && scope.carouselIndex === 0 && moveOffset === 0) {
-                                    $parse(iAttributes.rnCarouselOnInfiniteScrollLeft)(scope)
-                                    goToSlide(currentSlides.length);
-                                }
+                                scope.$apply(function(){
+                                  goToSlide(destination);
+                                  if(iAttributes.rnCarouselOnInfiniteScrollRight!==undefined && slidesMove === 0 && scope.carouselIndex !== 0) {
+                                      $parse(iAttributes.rnCarouselOnInfiniteScrollRight)(scope)
+                                      goToSlide(0);
+                                  }
+                                  if(iAttributes.rnCarouselOnInfiniteScrollLeft!==undefined && slidesMove === 0 && scope.carouselIndex === 0 && moveOffset === 0) {
+                                      $parse(iAttributes.rnCarouselOnInfiniteScrollLeft)(scope)
+                                      goToSlide(currentSlides.length);
+                                  }
+                                });
 
                             } else {
                                 scope.$apply(function() {

@@ -514,16 +514,17 @@
                                 var moveOffset = shouldMove ? slidesMove : 0;
 
                                 destination = (scope.carouselIndex + moveOffset);
-
-                                goToSlide(destination);
-                                if(iAttributes.rnCarouselOnInfiniteScrollRight!==undefined && slidesMove === 0 && scope.carouselIndex !== 0) {
-                                    $parse(iAttributes.rnCarouselOnInfiniteScrollRight)(scope)
-                                    goToSlide(0);
-                                }
-                                if(iAttributes.rnCarouselOnInfiniteScrollLeft!==undefined && slidesMove === 0 && scope.carouselIndex === 0 && moveOffset === 0) {
-                                    $parse(iAttributes.rnCarouselOnInfiniteScrollLeft)(scope)
-                                    goToSlide(currentSlides.length);
-                                }
+                                scope.$apply(function(){
+                                  goToSlide(destination);
+                                  if(iAttributes.rnCarouselOnInfiniteScrollRight!==undefined && slidesMove === 0 && scope.carouselIndex !== 0) {
+                                      $parse(iAttributes.rnCarouselOnInfiniteScrollRight)(scope)
+                                      goToSlide(0);
+                                  }
+                                  if(iAttributes.rnCarouselOnInfiniteScrollLeft!==undefined && slidesMove === 0 && scope.carouselIndex === 0 && moveOffset === 0) {
+                                      $parse(iAttributes.rnCarouselOnInfiniteScrollLeft)(scope)
+                                      goToSlide(currentSlides.length);
+                                  }
+                                });
 
                             } else {
                                 scope.$apply(function() {
